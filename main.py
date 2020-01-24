@@ -15,7 +15,7 @@ body = {
     "key": "example",
     "method": "json",   
     }
-
+imagedir = "" # /i/ as example
 @bot.event
 async def on_ready():
     print("Connected to API")
@@ -50,7 +50,7 @@ async def upload(ctx, file=""):
         # parse json
         decode = r.content.decode("utf-8") # convert bytes to string 
         x = json.loads(decode)
-        await ctx.send("https://jelbrek.icu/i/" + x["filename"])
+        await ctx.send("https:/serverurl/i/" + x["filename"])
     else:
         return await ctx.send("Something went wrong uploading.")
 
