@@ -9,13 +9,14 @@ import json
 
 bot = commands.Bot(command_prefix="x!")
 
-serverurl = ""
+serverurl = "" # https://raizo.de/example.php a
 # put your sharex body/form data into here
 body = { 
     "key": "example",
     "method": "json",   
     }
 imagedir = "" # /i/ as example
+fileform = "" # file as example
 @bot.event
 async def on_ready():
     print("Connected to API")
@@ -41,16 +42,15 @@ async def upload(ctx, file=""):
                 await s.write(await resp.read())
                 await s.close()
     # upload part 
-    rurl = "https://jelbrek.icu/upload.php"
     files = {
-        'file': open('cache/x.{}'.format(ext), 'rb')
+        '{}'.format(fileform): open('cache/x.{}'.format(ext), 'rb')
     }
-    r = requests.post(rurl, files=dict(files), data=body)
+    r = requests.post(serverurl, files=dict(files), data=body)
     if r.status_code == 200:
         # parse json
         decode = r.content.decode("utf-8") # convert bytes to string 
         x = json.loads(decode)
-        await ctx.send("https:/serverurl/i/" + x["filename"])
+        await ctx.send(f"{serverurl}{imagedir}" + {fileform}["filename"])
     else:
         return await ctx.send("Something went wrong uploading.")
 
@@ -58,4 +58,4 @@ async def upload(ctx, file=""):
 
 
 
-bot.run("NjY4NDI0MzIwNDIyMzc5NTMz.Xisb0g.tGft2ooSsmq9dvMMB-hw0i5xlmY")
+bot.run("NjY4NDI0MzIwNDIyMzc5NTMz.Xisb0g.tGft2ooSsmq9dvMMB-hw0i5xlmY") #  example < put ur bot token in here
